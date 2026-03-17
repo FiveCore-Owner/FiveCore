@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hud" style="display:none">
+
+    <div id="hud-topright">
+        <span id="hud-time">00:00</span>
+        <span id="hud-zone">Los Santos</span>
+    </div>
+
+    <div id="hud-bars">
+        <div class="bar-row">
+            <!-- health: cross -->
+            <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="1" width="4" height="12" rx="1"/>
+                <rect x="1" y="5" width="12" height="4" rx="1"/>
+            </svg>
+            <div class="bar-bg"><div class="bar-fill" id="bar-health" style="width:100%"></div></div>
+            <span class="bar-val" id="val-health">100</span>
+        </div>
+        <div class="bar-row" id="row-armour" style="display:none">
+            <!-- armour: shield -->
+            <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 1 L13 3.5 L13 7.5 C13 10.5 7 13 7 13 C7 13 1 10.5 1 7.5 L1 3.5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <div class="bar-bg"><div class="bar-fill" id="bar-armour" style="width:0%;background:#7799bb"></div></div>
+            <span class="bar-val" id="val-armour">0</span>
+        </div>
+        <div class="bar-row">
+            <!-- hunger: wheat stalk -->
+            <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <line x1="7" y1="13" x2="7" y2="1" stroke="currentColor" stroke-width="1.5"/>
+                <ellipse cx="4.5" cy="4.5" rx="2" ry="1.2" transform="rotate(-30 4.5 4.5)"/>
+                <ellipse cx="9.5" cy="4.5" rx="2" ry="1.2" transform="rotate(30 9.5 4.5)"/>
+                <ellipse cx="4.5" cy="7" rx="2" ry="1.2" transform="rotate(-30 4.5 7)"/>
+                <ellipse cx="9.5" cy="7" rx="2" ry="1.2" transform="rotate(30 9.5 7)"/>
+            </svg>
+            <div class="bar-bg"><div class="bar-fill" id="bar-hunger" style="width:100%;background:#998866"></div></div>
+            <span class="bar-val" id="val-hunger">100</span>
+        </div>
+        <div class="bar-row">
+            <!-- thirst: water drop -->
+            <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 1 C7 1 2 6.5 2 9.5 A5 5 0 0 0 12 9.5 C12 6.5 7 1 7 1 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <div class="bar-bg"><div class="bar-fill" id="bar-thirst" style="width:100%;background:#557799"></div></div>
+            <span class="bar-val" id="val-thirst">100</span>
+        </div>
+        <div class="bar-row" id="row-stress" style="display:none">
+            <!-- stress: lightning bolt -->
+            <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="9,1 5,7 8,7 5,13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            <div class="bar-bg"><div class="bar-fill" id="bar-stress" style="width:0%;background:#775566"></div></div>
+            <span class="bar-val" id="val-stress">0</span>
+        </div>
+    </div>
+
+    <div id="hud-money">
+        <div class="money-row" id="hud-cash">$0</div>
+        <div class="money-row sub" id="hud-bank">$0</div>
+    </div>
+
+    <div id="hud-speed" style="display:none">
+        <span id="speed-val">0</span>
+        <span class="speed-unit">km/h</span>
+    </div>
+
+</div>
+
+<div id="notif-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

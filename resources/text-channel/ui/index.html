@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Telefon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="phone" style="display:none">
+    <div class="phone-frame">
+        <div class="statusbar">
+            <span id="phone-time">12:00</span>
+            <span id="my-phone-display">555-0000</span>
+        </div>
+
+        <div class="phone-tabs">
+            <button class="ptab active" data-tab="inbox" data-i18n="phone_tab_inbox">Eingang</button>
+            <button class="ptab" data-tab="outbox" data-i18n="phone_tab_outbox">Gesendet</button>
+            <button class="ptab" data-tab="compose" data-i18n="phone_tab_compose">Neu</button>
+        </div>
+
+        <div id="ptab-inbox" class="ptab-content active">
+            <div id="inbox-list" class="msg-list">
+                <div class="empty-msg" data-i18n="phone_empty_inbox">Keine Nachrichten</div>
+            </div>
+        </div>
+
+        <div id="ptab-outbox" class="ptab-content">
+            <div id="outbox-list" class="msg-list">
+                <div class="empty-msg" data-i18n="phone_empty_outbox">Keine gesendeten Nachrichten</div>
+            </div>
+        </div>
+
+        <div id="ptab-compose" class="ptab-content">
+            <div class="compose-form">
+                <label class="comp-label">
+                    <span data-i18n="phone_to">Empfänger:</span>
+                    <input type="text" id="comp-to" placeholder="555-1234" maxlength="20">
+                </label>
+                <label class="comp-label">
+                    <span data-i18n="phone_message">Nachricht:</span>
+                    <textarea id="comp-msg" placeholder="Nachricht..." maxlength="200" rows="4"></textarea>
+                </label>
+                <div id="comp-counter" class="char-counter">0 / 200</div>
+                <div id="comp-error" class="comp-error" style="display:none"></div>
+                <button id="btn-send-sms" class="btn-send" data-i18n="phone_send">Senden</button>
+            </div>
+        </div>
+
+        <button class="phone-close" id="btn-close-phone">✕</button>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

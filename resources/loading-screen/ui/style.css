@@ -1,0 +1,128 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: #090909;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: #ccc;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ls {
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+/* Brand */
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.brand-name {
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 10px;
+    color: #e8e8e8;
+}
+.brand-sub {
+    font-size: 0.72em;
+    letter-spacing: 8px;
+    color: #444;
+}
+
+/* Middle block */
+.mid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Progress bar */
+.bar-wrap {
+    width: 100%;
+    height: 2px;
+    background: #1c1c1c;
+}
+#pb {
+    height: 100%;
+    width: 0%;
+    background: #888;
+    transition: width 0.4s ease;
+}
+
+/* Status text */
+#status {
+    font-size: 0.72em;
+    letter-spacing: 1.5px;
+    color: #555;
+    text-transform: uppercase;
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 4px;
+}
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #222;
+    border: 1px solid #333;
+    transition: all 0.3s;
+}
+.step span {
+    font-size: 0.6em;
+    letter-spacing: 1px;
+    color: #333;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.step.active .dot  { background: #aaa; border-color: #aaa; }
+.step.active span  { color: #aaa; }
+.step.done .dot    { background: #555; border-color: #555; }
+.step.done span    { color: #555; }
+
+.step-sep {
+    flex: 1;
+    height: 1px;
+    background: #222;
+    min-width: 40px;
+    margin-bottom: 14px;
+}
+
+/* Tip */
+.tip-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.78em;
+    color: #444;
+}
+.tip-tag {
+    font-size: 0.7em;
+    letter-spacing: 2px;
+    color: #333;
+    border: 1px solid #222;
+    padding: 2px 7px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+#tip {
+    line-height: 1.5;
+    transition: opacity 0.3s;
+}

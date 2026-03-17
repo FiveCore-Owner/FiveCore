@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>FiveCore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="ls">
+    <div class="brand">
+        <span class="brand-name">FIVECORE</span>
+        <span class="brand-sub" data-i18n="loading_subtitle">ROLEPLAY</span>
+    </div>
+
+    <div class="mid">
+        <div class="bar-wrap">
+            <div id="pb"></div>
+        </div>
+        <div id="status" data-i18n="loading_step_1">Verbinde mit Server...</div>
+        <div class="steps">
+            <div class="step" id="s1"><div class="dot"></div><span data-i18n="loading_server">Server</span></div>
+            <div class="step-sep"></div>
+            <div class="step" id="s2"><div class="dot"></div><span data-i18n="loading_account">Account</span></div>
+            <div class="step-sep"></div>
+            <div class="step" id="s3"><div class="dot"></div><span data-i18n="loading_character">Charaktere</span></div>
+        </div>
+    </div>
+
+    <div class="tip-row">
+        <span class="tip-tag" data-i18n="loading_tip_label">TIPP</span>
+        <span id="tip"></span>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
