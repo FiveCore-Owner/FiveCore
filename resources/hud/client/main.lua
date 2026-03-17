@@ -1,18 +1,24 @@
 -- FiveCore HUD Client
 
 local hudVisible  = false
+local hudTitle    = GetConvar("hudtitle", "FiveCore RP")
 local hudData     = {
-    health  = 100,
-    armour  = 0,
-    hunger  = 100,
-    thirst  = 100,
-    stress  = 0,
-    cash    = 0,
-    bank    = 0,
-    zone    = "Los Santos",
-    time    = "00:00",
+    health   = 100,
+    armour   = 0,
+    hunger   = 100,
+    thirst   = 100,
+    stress   = 0,
+    cash     = 0,
+    bank     = 0,
+    job      = "",
+    zone     = "Los Santos",
+    street   = "",
+    time     = "00:00",
     inVehicle = false,
     speed     = 0,
+    gear      = 0,
+    compass   = "N",
+    wanted    = 0,
 }
 
 -- ─── HUD anzeigen ────────────────────────────────────────────────────────────
@@ -28,9 +34,10 @@ local function HideHUD()
     SendNUIMessage({ type = "hide" })
 end
 
--- ─── Charakter geladen → HUD einblenden ──────────────────────────────────────
+-- ─── Charakter geladen → HUD-Daten vorbereiten ───────────────────────────────
 
-AddEventHandler(EVENTS.PLAYER_LOADED, function(data)
+RegisterNetEvent("fivecore:playerDataLoaded")
+AddEventHandler("fivecore:playerDataLoaded", function(data)
     if data and data.money then
         hudData.cash = data.money.cash or 0
         hudData.bank = data.money.bank or 0
@@ -40,14 +47,17 @@ AddEventHandler(EVENTS.PLAYER_LOADED, function(data)
         hudData.thirst = data.character.status.thirst or 100
         hudData.stress = data.character.status.stress or 0
     end
-    Wait(1000)
-    ShowHUD()
+    if data and data.character and data.character.job then
+        local job = data.character.job
+        hudData.job = (job.label ~= nil and job.label ~= "") and job.label or (job.name or "")
+    end
 end)
 
--- Lokales Event nach Spawn
-AddEventHandler("fivecore:localPlayerLoaded", function()
-    Wait(1500)
-    if not hudVisible then ShowHUD() end
+-- Nach dem tatsächlichen Spawn → HUD einblenden + Titel senden
+AddEventHandler("fivecore:localPlayerSpawned", function()
+    Wait(500)
+    ShowHUD()
+    SendNUIMessage({ type = "setTitle", title = hudTitle })
 end)
 
 -- ─── Geld-Update ─────────────────────────────────────────────────────────────
@@ -68,6 +78,15 @@ AddEventHandler("fivecore:localStatusUpdated", function(data)
 end)
 
 -- ─── HUD Tick ────────────────────────────────────────────────────────────────
+
+local COMPASS = { "N","NE","E","SE","S","SW","W","NW" }
+local function GetCompassDir(heading)
+    -- FiveM heading: 0=N, 90=W, 180=S, 270=E  (counter-clockwise)
+    -- Convert to standard compass (clockwise from N)
+    local h = (360 - heading) % 360
+    local idx = math.floor((h + 22.5) / 45) % 8 + 1
+    return COMPASS[idx]
+end
 
 local function GetZoneName(x, y, z)
     local zone = GetNameOfZone(x, y, z)
@@ -190,36 +209,64 @@ CreateThread(function()
         hudData.health = math.max(0, math.min(100, hp))
         hudData.armour = math.max(0, math.min(100, armour))
 
-        -- Fahrzeug / Geschwindigkeit
+        -- Fahrzeug-Status (Geschwindigkeit wird im 1ms-Thread aktualisiert)
         local veh = GetVehiclePedIsIn(ped, false)
         local inVehicle = veh ~= 0
-        local speed = 0
-        if inVehicle then
-            speed = math.floor(GetEntitySpeed(veh) * 3.6)
-        end
         hudData.inVehicle = inVehicle
-        hudData.speed     = speed
 
-        -- Zone
+        -- Zone, Straße, Kompass
         local pos = GetEntityCoords(ped)
-        hudData.zone = GetZoneName(pos.x, pos.y, pos.z)
+        hudData.zone    = GetZoneName(pos.x, pos.y, pos.z)
+        local streetHash, _ = GetStreetNameAtCoord(pos.x, pos.y, pos.z)
+        hudData.street  = GetStreetNameFromHashKey(streetHash) or ""
+        hudData.compass = GetCompassDir(GetEntityHeading(ped))
 
         -- Uhrzeit
         local h, m = GetClockHours(), GetClockMinutes()
         hudData.time = string.format("%02d:%02d", h, m)
 
+        -- Wanted Level
+        hudData.wanted = GetPlayerWantedLevel(PlayerId())
+
+        -- Fahrzeug-Gang
+        local gear = 0
+        if inVehicle then
+            gear  = GetVehicleCurrentGear(veh)
+        end
+        hudData.gear = gear
+
+        -- Fahrzeug-Gang (nur im 500ms Tick nötig)
+        local gear = 0
+        if inVehicle then
+            gear = GetVehicleCurrentGear(veh)
+        end
+        hudData.gear = gear
+
         SendNUIMessage({
-            type     = "tick",
-            health   = hudData.health,
-            armour   = hudData.armour,
-            inVehicle= inVehicle,
-            speed    = speed,
-            zone     = hudData.zone,
-            time     = hudData.time,
+            type      = "tick",
+            health    = hudData.health,
+            armour    = hudData.armour,
+            inVehicle = inVehicle,
+            speed     = hudData.speed,
+            gear      = gear,
+            zone      = hudData.zone,
+            street    = hudData.street,
+            time      = hudData.time,
+            compass   = hudData.compass,
+            wanted    = hudData.wanted,
         })
 
         ::continue::
     end
+end)
+
+-- ─── Job-Update ──────────────────────────────────────────────────────────────
+
+RegisterNetEvent("fivecore:jobUpdated")
+AddEventHandler("fivecore:jobUpdated", function(data)
+    local label = (data and data.label ~= nil and data.label ~= "") and data.label or (data and data.name or "")
+    hudData.job = label
+    SendNUIMessage({ type = "updateJob", job = label })
 end)
 
 -- ─── Notify (NUI-basiert) ─────────────────────────────────────────────────────
@@ -231,6 +278,25 @@ AddEventHandler("fivecore:showNotify", function(data)
         ntype    = data.type or "info",
         duration = data.duration or 4000,
     })
+end)
+
+-- ─── Fahrzeug-Geschwindigkeit (1ms für flüssige Anzeige) ─────────────────────
+
+CreateThread(function()
+    while true do
+        Wait(0)
+        if not hudVisible then goto vskip end
+        local ped = PlayerPedId()
+        local veh = GetVehiclePedIsIn(ped, false)
+        if veh ~= 0 then
+            local spd = math.floor(GetEntitySpeed(veh) * 3.6)
+            if spd ~= hudData.speed then
+                hudData.speed = spd
+                SendNUIMessage({ type = "speedOnly", speed = spd })
+            end
+        end
+        ::vskip::
+    end
 end)
 
 -- ─── Standard-GTA HUD verstecken ─────────────────────────────────────────────

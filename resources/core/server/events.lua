@@ -108,7 +108,11 @@ RegisterNetEvent(EVENTS.REQ_SPAWN, function(spawnIndex)
     end
 
     p.state = CHARACTER_STATES.LOADED
-    TriggerClientEvent("fivecore:doSpawn", src, { coords = coords })
+    TriggerClientEvent("fivecore:doSpawn", src, {
+        coords     = coords,
+        gender     = p.character.gender     or 0,
+        appearance = p.character.appearance or {},
+    })
     TriggerClientEvent(EVENTS.LOADING_STEP, src, LOADING_STEPS.DONE)
 
     DB.Log(src, "player_spawned", {
@@ -137,7 +141,9 @@ RegisterNetEvent(EVENTS.SYNC_STATUS, function(status)
     -- If the client sends values much higher than what we last recorded,
     -- that is suspicious (cheater trying to prevent hunger/thirst drain).
     local cur = p.character.status
-    local maxIncrease = (Config.StatusDrain or 5) * 3  -- allow a small buffer
+    -- Config.StatusDrain is a table {hunger,thirst,stress} — use the larger of the two
+    local drainMax    = math.max(Config.StatusDrain.hunger or 2, Config.StatusDrain.thirst or 3)
+    local maxIncrease = drainMax * 3
 
     local newHunger = clamp(status.hunger)
     local newThirst = clamp(status.thirst)

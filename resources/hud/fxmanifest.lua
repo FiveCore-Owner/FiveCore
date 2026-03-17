@@ -26,3 +26,8 @@ files {
     'ui/style.css',
     'ui/app.js',
 }
+
+-- Stream-Ordner: FiveM streamt .ytd und .gfx Dateien aus dem stream/ Ordner automatisch.
+-- minimap.ytd  → ersetzt die Minimap-Textur im Spiel
+-- minimap.gfx  → ersetzt das Minimap-Scaleform-UI
+-- Beide Dateien werden automatisch geladen, keine weiteren Einträge nötig.

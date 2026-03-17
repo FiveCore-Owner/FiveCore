@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weapon Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="shop" style="display:none">
+    <div id="shop-panel">
+
+        <!-- Header -->
+        <div id="shop-header">
+            <div>
+                <div id="shop-title" data-i18n="ws_title">WEAPON SHOP</div>
+                <div id="shop-sub" data-i18n="ws_subtitle">Ammu-Nation</div>
+            </div>
+            <button id="shop-close">&#10005;</button>
+        </div>
+
+        <div class="shop-divider"></div>
+
+        <!-- No license -->
+        <div id="no-license-section">
+            <div class="info-text" data-i18n="ws_no_license">You don't have a weapons license.</div>
+            <div id="license-price-row">
+                <span data-i18n="ws_license_cost">License cost:</span>
+                <span id="license-price-val">$15,000</span>
+            </div>
+            <button id="btn-buy-license" data-i18n="ws_buy_license">Buy Weapons License</button>
+            <div class="info-text small" data-i18n="ws_or_train">— or prove yourself at the training range —</div>
+            <button id="btn-training" data-i18n="ws_start_training">Start Training Range</button>
+        </div>
+
+        <!-- Weapon shop (has license) -->
+        <div id="weapon-section" style="display:none">
+            <div class="license-badge" data-i18n="ws_licensed">Licensed</div>
+            <div class="shop-divider"></div>
+            <div id="weapon-list"></div>
+        </div>
+
+        <!-- Status message -->
+        <div id="shop-status" style="display:none"></div>
+
+    </div>
+</div>
+
+<!-- Training HUD (overlay) -->
+<div id="training-hud" style="display:none">
+    <div id="training-panel">
+        <div id="training-title" data-i18n="ws_training_title">TRAINING RANGE</div>
+        <div id="training-progress">
+            <span id="training-kills">0</span>
+            <span class="training-sep">/</span>
+            <span id="training-required">10</span>
+            <span class="training-label" data-i18n="ws_kills_label">KILLS</span>
+        </div>
+        <div id="training-bar-wrap">
+            <div id="training-bar" style="width:0%"></div>
+        </div>
+        <div id="training-hint" data-i18n="ws_training_hint">Eliminate targets. Headshots count!</div>
+        <button id="btn-exit-training" data-i18n="ws_exit_training">Abort</button>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

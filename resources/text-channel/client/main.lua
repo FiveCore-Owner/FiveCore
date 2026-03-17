@@ -5,7 +5,8 @@ local playerLoaded = false
 
 -- ─── Spieler geladen → F2 aktivieren ─────────────────────────────────────────
 
-AddEventHandler(EVENTS.PLAYER_LOADED, function()
+RegisterNetEvent("fivecore:playerDataLoaded")
+AddEventHandler("fivecore:playerDataLoaded", function()
     playerLoaded = true
 end)
 
@@ -14,7 +15,7 @@ end)
 CreateThread(function()
     while true do
         Wait(0)
-        if IsControlJustReleased(0, 289) then -- F2 = 289
+        if IsControlJustReleased(0, 288) then -- F3 = 288
             if playerLoaded then
                 if phoneOpen then
                     ClosePhone()

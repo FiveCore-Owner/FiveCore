@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Death Screen</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="death" style="display:none">
+
+    <!-- Vignette overlay -->
+    <div id="vignette"></div>
+
+    <!-- Blood drips (SVG) -->
+    <svg id="blood-drips" viewBox="0 0 1920 1080" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Drop 1 -->
+        <path d="M 180 0 Q 183 60 180 90 Q 177 110 180 130" stroke="rgba(120,10,10,0.7)" stroke-width="3" fill="none"/>
+        <ellipse cx="180" cy="140" rx="5" ry="9" fill="rgba(100,8,8,0.6)"/>
+        <!-- Drop 2 -->
+        <path d="M 420 0 Q 416 40 420 70 Q 424 95 420 115" stroke="rgba(130,12,12,0.6)" stroke-width="2.5" fill="none"/>
+        <ellipse cx="420" cy="124" rx="4" ry="8" fill="rgba(110,10,10,0.55)"/>
+        <!-- Drop 3 -->
+        <path d="M 900 0 Q 896 50 900 80 Q 904 100 900 120" stroke="rgba(120,10,10,0.65)" stroke-width="3" fill="none"/>
+        <ellipse cx="900" cy="130" rx="5" ry="9" fill="rgba(105,8,8,0.6)"/>
+        <!-- Drop 4 -->
+        <path d="M 1400 0 Q 1404 55 1400 85 Q 1396 105 1400 125" stroke="rgba(115,10,10,0.6)" stroke-width="2.5" fill="none"/>
+        <ellipse cx="1400" cy="134" rx="4" ry="8" fill="rgba(100,8,8,0.55)"/>
+        <!-- Drop 5 -->
+        <path d="M 1700 0 Q 1703 45 1700 70 Q 1697 88 1700 105" stroke="rgba(125,12,12,0.55)" stroke-width="2" fill="none"/>
+        <ellipse cx="1700" cy="113" rx="3.5" ry="7" fill="rgba(105,8,8,0.5)"/>
+        <!-- Smear left -->
+        <path d="M 0 400 Q 30 390 60 400 Q 90 410 110 400" stroke="rgba(100,8,8,0.4)" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- Smear right -->
+        <path d="M 1860 600 Q 1890 590 1920 600" stroke="rgba(100,8,8,0.35)" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- Corner pool bottom-left -->
+        <ellipse cx="60" cy="1060" rx="70" ry="25" fill="rgba(80,5,5,0.4)"/>
+        <!-- Corner pool bottom-right -->
+        <ellipse cx="1860" cy="1070" rx="60" ry="20" fill="rgba(80,5,5,0.35)"/>
+    </svg>
+
+    <!-- Central content -->
+    <div id="death-center">
+        <!-- Flatline ECG icon -->
+        <svg id="ecg-icon" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+            <polyline
+                points="0,30 40,30 55,30 60,10 65,50 70,30 80,30 90,5 95,55 100,30 115,30 120,30 135,30 140,12 145,48 150,30 165,30 200,30"
+                fill="none" stroke="rgba(180,20,20,0.6)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+            />
+            <!-- Flatline after -->
+            <line x1="0" y1="30" x2="200" y2="30" stroke="rgba(180,20,20,0.15)" stroke-width="1.5" stroke-dasharray="4 6"/>
+        </svg>
+
+        <div id="death-title" data-i18n="death_title">YOU DIED</div>
+        <div id="death-sub" data-i18n="death_subtitle">Waiting for ambulance...</div>
+
+        <div id="death-timer-block">
+            <div id="death-timer-val">0:00</div>
+            <div id="death-timer-lbl" data-i18n="death_respawn_in">Auto-respawn in</div>
+        </div>
+
+        <div id="death-actions">
+            <button id="btn-ambulance" data-i18n="death_call_ambulance">Call Ambulance [911]</button>
+        </div>
+    </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

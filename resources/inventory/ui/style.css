@@ -1,0 +1,216 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: transparent;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Hotbar ─────────────────────────────────────────────────────────────────── */
+#hotbar {
+    position: fixed;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    pointer-events: none;
+}
+.hotbar-slot {
+    width: 52px;
+    height: 52px;
+    background: rgba(8,8,8,0.82);
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+}
+.hotbar-slot.has-item {
+    border-color: rgba(255,255,255,0.18);
+}
+.hotbar-key {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    font-size: 0.52em;
+    font-weight: 700;
+    color: rgba(140,140,140,0.5);
+    letter-spacing: 0.5px;
+}
+.slot-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 2px;
+}
+.slot-icon {
+    font-size: 1.4em;
+    line-height: 1;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8));
+}
+.slot-count {
+    font-size: 0.55em;
+    color: rgba(180,180,180,0.7);
+    font-variant-numeric: tabular-nums;
+}
+.slot-label {
+    font-size: 0.5em;
+    color: rgba(140,140,140,0.6);
+    letter-spacing: 0.5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 44px;
+    text-align: center;
+}
+
+/* ─── Full Inventory Overlay ────────────────────────────────────────────────── */
+#inv-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: invIn 0.14s ease;
+}
+@keyframes invIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to   { opacity: 1; transform: scale(1); }
+}
+#inv-panel {
+    background: rgba(6,6,6,0.96);
+    border: 1px solid rgba(255,255,255,0.06);
+    width: 560px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+#inv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#inv-title {
+    font-size: 0.75em;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(200,200,200,0.85);
+}
+#inv-close {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(140,140,140,0.6);
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: color 0.15s, border-color 0.15s;
+}
+#inv-close:hover {
+    border-color: rgba(255,255,255,0.18);
+    color: rgba(200,200,200,0.9);
+}
+
+/* ─── Grid ───────────────────────────────────────────────────────────────────── */
+#inv-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 3px;
+}
+#inv-hotbar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+}
+.inv-section-label {
+    font-size: 0.52em;
+    letter-spacing: 3px;
+    color: rgba(100,100,100,0.55);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.inv-slot {
+    width: 56px;
+    height: 56px;
+    background: rgba(15,15,15,0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.1s, background 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+    user-select: none;
+}
+.inv-slot:hover {
+    border-color: rgba(255,255,255,0.12);
+    background: rgba(25,25,25,0.9);
+}
+.inv-slot.has-item {
+    border-color: rgba(255,255,255,0.1);
+}
+.inv-slot.dragging {
+    opacity: 0.4;
+}
+.inv-slot.drag-over {
+    border-color: rgba(200,200,200,0.35);
+    background: rgba(40,40,40,0.9);
+}
+.inv-slot.hotbar-in-grid {
+    background: rgba(18,18,18,0.9);
+    border-color: rgba(255,255,255,0.07);
+}
+.inv-slot-num {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    font-size: 0.45em;
+    color: rgba(70,70,70,0.6);
+}
+.inv-slot-count {
+    position: absolute;
+    bottom: 3px;
+    right: 4px;
+    font-size: 0.55em;
+    color: rgba(180,180,180,0.75);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Tooltip ────────────────────────────────────────────────────────────────── */
+#inv-tooltip {
+    position: fixed;
+    background: rgba(6,6,6,0.96);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 7px 11px;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+    max-width: 180px;
+}
+#inv-tooltip .tt-name {
+    font-size: 0.72em;
+    font-weight: 600;
+    color: rgba(210,210,210,0.9);
+    letter-spacing: 0.5px;
+}
+#inv-tooltip .tt-count {
+    font-size: 0.62em;
+    color: rgba(120,120,120,0.7);
+    margin-top: 2px;
+}

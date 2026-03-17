@@ -17,15 +17,18 @@ LocalPlayer = {
     status    = { hunger = 100, thirst = 100, stress = 0 },
     state     = CHARACTER_STATES.IDLE,
     loaded    = false,
+    fcId      = nil,     -- Permanente FC-ID (accounts.id)
 }
 
 -- ─── Listener: Charakter geladen ─────────────────────────────────────────────
 
-RegisterNetEvent(EVENTS.PLAYER_LOADED, function(data)
+RegisterNetEvent("fivecore:playerDataLoaded")
+AddEventHandler("fivecore:playerDataLoaded", function(data)
     LocalPlayer.character = data.character
     LocalPlayer.money     = data.money
     LocalPlayer.state     = CHARACTER_STATES.LOADED
     LocalPlayer.loaded    = true
+    LocalPlayer.fcId      = data.fcId
     if data.character.status then
         LocalPlayer.status = data.character.status
     end
@@ -34,21 +37,24 @@ end)
 
 -- ─── Listener: Geld ──────────────────────────────────────────────────────────
 
-RegisterNetEvent(EVENTS.MONEY_UPDATED, function(data)
+RegisterNetEvent("fivecore:moneyUpdated")
+AddEventHandler("fivecore:moneyUpdated", function(data)
     LocalPlayer.money = data
     TriggerEvent("fivecore:localMoneyUpdated", data)
 end)
 
 -- ─── Listener: Status ────────────────────────────────────────────────────────
 
-RegisterNetEvent(EVENTS.STATUS_UPDATED, function(data)
+RegisterNetEvent("fivecore:statusUpdated")
+AddEventHandler("fivecore:statusUpdated", function(data)
     LocalPlayer.status = data
     TriggerEvent("fivecore:localStatusUpdated", data)
 end)
 
 -- ─── Listener: Notify ────────────────────────────────────────────────────────
 
-RegisterNetEvent(EVENTS.NOTIFY, function(data)
+RegisterNetEvent("fivecore:notify")
+AddEventHandler("fivecore:notify", function(data)
     TriggerEvent("fivecore:showNotify", data)
 end)
 

@@ -99,6 +99,13 @@ function DB.SaveCharacter(charId, data)
     })
 end
 
+function DB.SaveJob(charId, job)
+    MySQL.update.await(
+        "UPDATE characters SET job = ? WHERE id = ?",
+        { json.encode(job), charId }
+    )
+end
+
 function DB.SavePosition(charId, position)
     MySQL.update.await(
         "UPDATE characters SET position = ? WHERE id = ?",

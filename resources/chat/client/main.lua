@@ -14,6 +14,13 @@ CreateThread(function()
     SendNUIMessage({ type = "init", locale = Locales[ClientLang] or Locales['en'] })
 end)
 
+-- ─── Spieler-Status verfolgen ────────────────────────────────────────────────
+
+local playerLoaded = false
+AddEventHandler("fivecore:localPlayerSpawned", function()
+    playerLoaded = true
+end)
+
 -- ─── Chat öffnen / schließen ─────────────────────────────────────────────────
 
 local function OpenChat(mode)
@@ -36,7 +43,7 @@ CreateThread(function()
         Wait(0)
         -- T = lokalen Chat öffnen
         if IsControlJustReleased(0, 245) and not isOpen then -- T
-            if LocalPlayer and LocalPlayer.loaded then
+            if playerLoaded then
                 OpenChat("local")
             end
         end

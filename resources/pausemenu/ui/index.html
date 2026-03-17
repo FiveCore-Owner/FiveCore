@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pause Menu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="pause" style="display:none">
+
+    <!-- Semi-transparent dark overlay -->
+    <div id="pause-overlay"></div>
+
+    <!-- Info panel top-left -->
+    <div id="pause-panel">
+
+        <div id="pause-server">
+            <div id="pause-server-name"></div>
+            <div id="pause-server-sub" data-i18n="pause_subtitle">ROLEPLAY SERVER</div>
+        </div>
+
+        <div class="pause-divider"></div>
+
+        <div class="pause-stat-group">
+            <div class="pause-stat">
+                <span class="pause-stat-lbl" data-i18n="pause_time">Time</span>
+                <span class="pause-stat-val" id="p-time">--:--</span>
+            </div>
+            <div class="pause-stat">
+                <span class="pause-stat-lbl" data-i18n="pause_zone">Zone</span>
+                <span class="pause-stat-val" id="p-zone">-</span>
+            </div>
+            <div class="pause-stat">
+                <span class="pause-stat-lbl" data-i18n="pause_coords">Position</span>
+                <span class="pause-stat-val" id="p-coords">0, 0, 0</span>
+            </div>
+            <div class="pause-stat">
+                <span class="pause-stat-lbl" data-i18n="pause_players">Players</span>
+                <span class="pause-stat-val" id="p-players">-</span>
+            </div>
+        </div>
+
+        <div class="pause-divider"></div>
+
+        <div class="pause-stat-group">
+            <div class="pause-stat">
+                <span class="pause-stat-lbl" data-i18n="pause_health">Health</span>
+                <div class="pause-mini-bar-wrap">
+                    <div class="pause-mini-bar health" id="pb-health" style="width:100%"></div>
+                </div>
+                <span class="pause-stat-val" id="pv-health">100</span>
+            </div>
+            <div class="pause-stat" id="prow-armour" style="display:none">
+                <span class="pause-stat-lbl" data-i18n="pause_armour">Armour</span>
+                <div class="pause-mini-bar-wrap">
+                    <div class="pause-mini-bar armour" id="pb-armour" style="width:0%"></div>
+                </div>
+                <span class="pause-stat-val" id="pv-armour">0</span>
+            </div>
+        </div>
+
+        <div class="pause-divider"></div>
+
+        <button id="pause-close-btn" data-i18n="pause_close">Close  [ESC]</button>
+
+    </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

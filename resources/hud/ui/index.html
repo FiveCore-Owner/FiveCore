@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HUD</title>
@@ -8,29 +8,47 @@
 <body>
 <div id="hud" style="display:none">
 
+    <!-- ── Top Left: Server Title Watermark ── -->
+    <div id="hud-title"></div>
+
+    <!-- ── Top Right: Time + Compass + Zone ── -->
     <div id="hud-topright">
-        <span id="hud-time">00:00</span>
+        <div id="hud-time-block">
+            <span id="hud-time">00:00</span>
+            <span id="hud-compass">N</span>
+        </div>
         <span id="hud-zone">Los Santos</span>
+        <span id="hud-street"></span>
     </div>
 
+    <!-- ── Wanted Stars ── -->
+    <div id="hud-wanted" style="display:none">
+        <span id="wanted-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+
+    <!-- ── Bottom Right: Stat Bars ── -->
     <div id="hud-bars">
+
         <div class="bar-row">
             <!-- health: cross -->
             <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
                 <rect x="5" y="1" width="4" height="12" rx="1"/>
                 <rect x="1" y="5" width="12" height="4" rx="1"/>
             </svg>
-            <div class="bar-bg"><div class="bar-fill" id="bar-health" style="width:100%"></div></div>
+            <div class="bar-bg"><div class="bar-fill health" id="bar-health" style="width:100%"></div></div>
             <span class="bar-val" id="val-health">100</span>
         </div>
+
         <div class="bar-row" id="row-armour" style="display:none">
-            <!-- armour: shield -->
+            <!-- armour: shield outline -->
             <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 1 L13 3.5 L13 7.5 C13 10.5 7 13 7 13 C7 13 1 10.5 1 7.5 L1 3.5 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 1 L13 3.5 L13 7.5 C13 10.5 7 13 7 13 C7 13 1 10.5 1 7.5 L1 3.5 Z"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
             </svg>
-            <div class="bar-bg"><div class="bar-fill" id="bar-armour" style="width:0%;background:#7799bb"></div></div>
+            <div class="bar-bg"><div class="bar-fill armour" id="bar-armour" style="width:0%"></div></div>
             <span class="bar-val" id="val-armour">0</span>
         </div>
+
         <div class="bar-row">
             <!-- hunger: wheat stalk -->
             <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
@@ -40,35 +58,71 @@
                 <ellipse cx="4.5" cy="7" rx="2" ry="1.2" transform="rotate(-30 4.5 7)"/>
                 <ellipse cx="9.5" cy="7" rx="2" ry="1.2" transform="rotate(30 9.5 7)"/>
             </svg>
-            <div class="bar-bg"><div class="bar-fill" id="bar-hunger" style="width:100%;background:#998866"></div></div>
+            <div class="bar-bg"><div class="bar-fill hunger" id="bar-hunger" style="width:100%"></div></div>
             <span class="bar-val" id="val-hunger">100</span>
         </div>
+
         <div class="bar-row">
             <!-- thirst: water drop -->
             <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 1 C7 1 2 6.5 2 9.5 A5 5 0 0 0 12 9.5 C12 6.5 7 1 7 1 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 1 C7 1 2 6.5 2 9.5 A5 5 0 0 0 12 9.5 C12 6.5 7 1 7 1 Z"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
             </svg>
-            <div class="bar-bg"><div class="bar-fill" id="bar-thirst" style="width:100%;background:#557799"></div></div>
+            <div class="bar-bg"><div class="bar-fill thirst" id="bar-thirst" style="width:100%"></div></div>
             <span class="bar-val" id="val-thirst">100</span>
         </div>
+
         <div class="bar-row" id="row-stress" style="display:none">
             <!-- stress: lightning bolt -->
             <svg class="bar-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="9,1 5,7 8,7 5,13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <polyline points="9,1 5,7 8,7 5,13"
+                          fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
             </svg>
-            <div class="bar-bg"><div class="bar-fill" id="bar-stress" style="width:0%;background:#775566"></div></div>
+            <div class="bar-bg"><div class="bar-fill stress" id="bar-stress" style="width:0%"></div></div>
             <span class="bar-val" id="val-stress">0</span>
+        </div>
+
+    </div>
+
+    <!-- ── Bottom Left: Money + Job ── -->
+    <div id="hud-money">
+        <div id="hud-cash-row" class="money-line">
+            <svg class="money-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <text x="7" y="11" text-anchor="middle" font-size="10" fill="currentColor" font-family="serif">$</text>
+            </svg>
+            <span id="hud-cash">0</span>
+        </div>
+        <div id="hud-bank-row" class="money-line sub">
+            <svg class="money-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="10" width="12" height="2" rx="0.5"/>
+                <rect x="3" y="4"  width="2"  height="6" rx="0.5"/>
+                <rect x="6" y="4"  width="2"  height="6" rx="0.5"/>
+                <rect x="9" y="4"  width="2"  height="6" rx="0.5"/>
+                <polygon points="7,1 1,4 13,4"/>
+            </svg>
+            <span id="hud-bank">0</span>
+        </div>
+        <div id="hud-job-row" class="money-line sub" style="display:none; margin-top:4px;">
+            <svg class="money-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                <!-- briefcase icon -->
+                <rect x="1" y="5" width="12" height="8" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M5 5 V3.5 Q5 2 7 2 Q9 2 9 3.5 V5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+                <line x1="1" y1="9" x2="13" y2="9" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span id="hud-job"></span>
         </div>
     </div>
 
-    <div id="hud-money">
-        <div class="money-row" id="hud-cash">$0</div>
-        <div class="money-row sub" id="hud-bank">$0</div>
-    </div>
-
-    <div id="hud-speed" style="display:none">
-        <span id="speed-val">0</span>
-        <span class="speed-unit">km/h</span>
+    <!-- ── Vehicle HUD (speed + gear) ── -->
+    <div id="hud-vehicle" style="display:none">
+        <div id="hud-speed-block">
+            <span id="speed-val">0</span>
+            <span class="speed-unit">km/h</span>
+        </div>
+        <div id="hud-gear-block">
+            <span class="gear-lbl">GEAR</span>
+            <span id="gear-val">1</span>
+        </div>
     </div>
 
 </div>

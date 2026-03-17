@@ -1,0 +1,277 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: transparent;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Overlay ────────────────────────────────────────────────────────────────── */
+#shop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: shopIn 0.15s ease;
+}
+@keyframes shopIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Panel ──────────────────────────────────────────────────────────────────── */
+#shop-panel {
+    width: 420px;
+    max-height: 80vh;
+    background: rgba(6,6,6,0.97);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-top: 2px solid rgba(160,140,80,0.3);
+    padding: 20px 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.07) transparent;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+#shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+#shop-title {
+    font-size: 0.85em;
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(220,200,120,0.9);
+}
+#shop-sub {
+    font-size: 0.55em;
+    letter-spacing: 3px;
+    color: rgba(120,120,120,0.55);
+    margin-top: 3px;
+}
+#shop-close {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.07);
+    color: rgba(120,120,120,0.6);
+    width: 24px; height: 24px;
+    cursor: pointer;
+    font-size: 0.75em;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+}
+#shop-close:hover { color: rgba(200,200,200,0.9); border-color: rgba(255,255,255,0.15); }
+
+.shop-divider { height: 1px; background: rgba(255,255,255,0.05); }
+
+/* ─── No license section ─────────────────────────────────────────────────────── */
+.info-text {
+    font-size: 0.72em;
+    color: rgba(150,150,150,0.65);
+    line-height: 1.5;
+}
+.info-text.small { font-size: 0.62em; color: rgba(100,100,100,0.5); text-align: center; margin: 4px 0; }
+#license-price-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72em;
+    color: rgba(160,160,160,0.6);
+    margin: 4px 0;
+}
+#license-price-val {
+    font-weight: 700;
+    color: rgba(200,180,100,0.8);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────────── */
+button:not(#shop-close):not(#btn-exit-training) {
+    width: 100%;
+    padding: 10px 0;
+    background: rgba(15,15,15,0.8);
+    border: 1px solid rgba(160,140,80,0.2);
+    color: rgba(200,180,100,0.75);
+    font-size: 0.68em;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+button:not(#shop-close):not(#btn-exit-training):hover {
+    border-color: rgba(200,180,100,0.45);
+    color: rgba(220,200,120,0.95);
+    background: rgba(25,22,12,0.9);
+}
+button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+#btn-training {
+    border-color: rgba(80,120,160,0.2) !important;
+    color: rgba(100,150,200,0.7) !important;
+}
+#btn-training:hover {
+    border-color: rgba(100,160,220,0.4) !important;
+    color: rgba(130,180,230,0.95) !important;
+    background: rgba(10,15,25,0.9) !important;
+}
+
+/* ─── License badge ──────────────────────────────────────────────────────────── */
+.license-badge {
+    display: inline-block;
+    font-size: 0.58em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(100,180,100,0.75);
+    border: 1px solid rgba(100,180,100,0.2);
+    padding: 3px 10px;
+}
+
+/* ─── Weapon list ────────────────────────────────────────────────────────────── */
+#weapon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+}
+.weapon-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    background: rgba(12,12,12,0.8);
+    border: 1px solid rgba(255,255,255,0.04);
+    gap: 8px;
+    transition: border-color 0.1s;
+}
+.weapon-row:hover { border-color: rgba(255,255,255,0.09); }
+.weapon-cat {
+    font-size: 0.5em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(80,80,80,0.6);
+    margin-bottom: 6px;
+    margin-top: 4px;
+}
+.weapon-name {
+    font-size: 0.72em;
+    color: rgba(190,190,190,0.85);
+    flex: 1;
+}
+.weapon-price {
+    font-size: 0.68em;
+    font-weight: 600;
+    color: rgba(200,180,100,0.75);
+    font-variant-numeric: tabular-nums;
+    min-width: 60px;
+    text-align: right;
+}
+.btn-buy {
+    padding: 5px 12px !important;
+    width: auto !important;
+    font-size: 0.6em !important;
+    letter-spacing: 1.5px !important;
+    background: rgba(20,18,8,0.9) !important;
+}
+
+/* ─── Status message ─────────────────────────────────────────────────────────── */
+#shop-status {
+    font-size: 0.7em;
+    padding: 8px 12px;
+    border-left: 2px solid #555;
+    color: #aaa;
+}
+#shop-status.success { border-color: #4a7a4a; color: #8dba8d; }
+#shop-status.error   { border-color: #7a4a4a; color: #ba8d8d; }
+
+/* ─── Training HUD ───────────────────────────────────────────────────────────── */
+#training-hud {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: all;
+}
+#training-panel {
+    background: rgba(6,6,6,0.88);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-top: 2px solid rgba(80,120,160,0.4);
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 240px;
+}
+#training-title {
+    font-size: 0.7em;
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(100,150,200,0.85);
+}
+#training-progress {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+#training-kills {
+    font-size: 2em;
+    font-weight: 800;
+    color: rgba(220,220,220,0.92);
+    font-variant-numeric: tabular-nums;
+}
+.training-sep {
+    font-size: 1.2em;
+    color: rgba(80,80,80,0.7);
+}
+#training-required {
+    font-size: 1.1em;
+    color: rgba(120,120,120,0.6);
+}
+.training-label {
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    color: rgba(100,100,100,0.55);
+    padding-left: 6px;
+    align-self: flex-end;
+    padding-bottom: 4px;
+}
+#training-bar-wrap {
+    width: 180px;
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+}
+#training-bar {
+    height: 100%;
+    background: rgba(80,140,200,0.8);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+#training-hint {
+    font-size: 0.6em;
+    letter-spacing: 1.5px;
+    color: rgba(100,100,100,0.5);
+    text-transform: uppercase;
+    text-align: center;
+}
+#btn-exit-training {
+    padding: 6px 18px;
+    background: transparent;
+    border: 1px solid rgba(200,80,80,0.2);
+    color: rgba(180,80,80,0.6);
+    font-size: 0.6em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: border-color 0.15s, color 0.15s;
+}
+#btn-exit-training:hover { border-color: rgba(200,80,80,0.45); color: rgba(200,100,100,0.9); }

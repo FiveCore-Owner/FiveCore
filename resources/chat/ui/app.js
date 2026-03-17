@@ -54,9 +54,14 @@ function openChat(mode) {
     setMode(currentMode);
 }
 
-function closeChat() {
+function hideInputRow() {
     isOpen = false;
     document.getElementById('chat-input-row').style.display = 'none';
+}
+
+function closeChat() {
+    if (!isOpen) return;
+    hideInputRow();
     post('closeChat', {});
 }
 
@@ -89,7 +94,7 @@ window.addEventListener('message', e => {
         return;
     }
     if (data.type === 'open')    openChat(data.mode);
-    if (data.type === 'close')   closeChat();
+    if (data.type === 'close')   hideInputRow();
     if (data.type === 'message') addMessage(data.data);
     if (data.type === 'init' && data.locale) { _locale = data.locale; applyI18n(); }
 });

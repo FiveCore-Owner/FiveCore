@@ -1,0 +1,263 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: transparent;
+    color: #d8d8d8;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Overlay ────────────────────────────────────────────────────────────── */
+#app {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+}
+
+/* ─── Panel ──────────────────────────────────────────────────────────────── */
+#panel {
+    width: 380px;
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid #1a1a1a;
+}
+.header-icon {
+    width: 28px; height: 28px;
+    flex-shrink: 0;
+    color: rgba(200,200,200,0.35);
+    fill: rgba(200,200,200,0.35);
+}
+.header-icon svg { width: 100%; height: 100%; }
+.panel-title {
+    font-size: 0.62em;
+    font-weight: 700;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: #888;
+}
+.panel-sub {
+    font-size: 0.58em;
+    color: #3a3a3a;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+.btn-close {
+    margin-left: auto;
+    width: 26px; height: 26px;
+    background: none;
+    border: 1px solid #1e1e1e;
+    color: #444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+.btn-close:hover { border-color: #333; color: #888; }
+.btn-close svg { width: 14px; height: 14px; }
+
+/* ─── Balance ────────────────────────────────────────────────────────────── */
+.balance-block {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 0;
+    background: #0b0b0b;
+}
+.balance-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.balance-item:last-child { align-items: flex-end; }
+.balance-lbl {
+    font-size: 0.58em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a3a3a;
+}
+.balance-val {
+    font-size: 1.05em;
+    font-weight: 700;
+    color: #ccc;
+    letter-spacing: 0.5px;
+    font-variant-numeric: tabular-nums;
+}
+.balance-val.accent { color: #8ab8a0; }
+.balance-divider {
+    width: 1px;
+    height: 32px;
+    background: #1a1a1a;
+    flex-shrink: 0;
+    margin: 0 16px;
+}
+
+/* ─── Tabs ───────────────────────────────────────────────────────────────── */
+.tab-row {
+    display: flex;
+    border-bottom: 1px solid #1a1a1a;
+}
+.tab {
+    flex: 1;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 0.62em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a3a3a;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+.tab:hover  { color: #666; }
+.tab.active { color: #aaa; border-bottom-color: #3a3a3a; }
+
+/* ─── Tab Content ────────────────────────────────────────────────────────── */
+.tab-content {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 18px 18px;
+}
+.tab-content.active { display: flex; }
+
+/* ─── Form ───────────────────────────────────────────────────────────────── */
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-lbl {
+    font-size: 0.6em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a3a3a;
+}
+.input-row {
+    display: flex;
+    align-items: center;
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    transition: border-color 0.15s;
+}
+.input-row:focus-within { border-color: #333; }
+.input-prefix {
+    padding: 0 10px;
+    font-size: 0.9em;
+    color: #444;
+    user-select: none;
+}
+.form-input {
+    flex: 1;
+    padding: 9px 10px 9px 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: #ccc;
+    font-size: 0.9em;
+    font-family: inherit;
+    -moz-appearance: textfield;
+}
+.form-input::-webkit-outer-spin-button,
+.form-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+/* ─── Quick Amount Buttons ────────────────────────────────────────────────── */
+.quick-btns {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.quick-btn {
+    padding: 4px 8px;
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    color: #555;
+    font-size: 0.62em;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+.quick-btn:hover { border-color: #333; color: #999; }
+
+/* ─── Confirm Button ─────────────────────────────────────────────────────── */
+.btn-confirm {
+    padding: 10px 0;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    color: #888;
+    font-size: 0.65em;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.btn-confirm:hover { background: #181818; border-color: #3a3a3a; color: #ccc; }
+.btn-confirm:disabled { opacity: 0.35; cursor: default; }
+
+/* ─── Feedback ───────────────────────────────────────────────────────────── */
+.feedback {
+    padding: 8px 10px;
+    font-size: 0.75em;
+    border-left: 2px solid #333;
+    background: rgba(255,255,255,0.02);
+    color: #888;
+}
+.feedback.ok    { border-color: #4a7a4a; color: #8dba8d; }
+.feedback.error { border-color: #7a4a4a; color: #ba8d8d; }
+
+/* ─── History ────────────────────────────────────────────────────────────── */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 80px;
+}
+.history-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: #141414;
+    border: 1px solid #1a1a1a;
+}
+.hist-type {
+    font-size: 0.62em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #555;
+}
+.hist-type.deposit  { color: #6a9a7a; }
+.hist-type.withdraw { color: #9a7a6a; }
+.hist-amount {
+    font-size: 0.82em;
+    font-weight: 600;
+    color: #999;
+    font-variant-numeric: tabular-nums;
+}
+.hist-time {
+    font-size: 0.58em;
+    color: #333;
+    text-align: right;
+}
+.history-empty {
+    font-size: 0.72em;
+    color: #333;
+    text-align: center;
+    padding: 20px 0;
+    letter-spacing: 1px;
+}

@@ -1,0 +1,126 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: transparent;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+#pause {
+    position: fixed;
+    inset: 0;
+    pointer-events: all;
+    animation: fadeIn 0.18s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ─── Overlay (click-through area behind panel) ─────────────────────────────── */
+#pause-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    cursor: default;
+}
+
+/* ─── Info panel ─────────────────────────────────────────────────────────────── */
+#pause-panel {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    width: 240px;
+    background: rgba(6, 6, 6, 0.92);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: 2px solid rgba(160,160,160,0.18);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    backdrop-filter: blur(4px);
+}
+
+/* ─── Server name ─────────────────────────────────────────────────────────────── */
+#pause-server-name {
+    font-size: 1.1em;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(230,230,230,0.9);
+    text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+#pause-server-sub {
+    font-size: 0.58em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(120,120,120,0.55);
+    margin-top: 3px;
+}
+
+/* ─── Divider ─────────────────────────────────────────────────────────────────── */
+.pause-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+}
+
+/* ─── Stats ───────────────────────────────────────────────────────────────────── */
+.pause-stat-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.pause-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.pause-stat-lbl {
+    font-size: 0.6em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(100,100,100,0.7);
+    width: 58px;
+    flex-shrink: 0;
+}
+.pause-stat-val {
+    font-size: 0.72em;
+    color: rgba(190,190,190,0.82);
+    font-variant-numeric: tabular-nums;
+    flex: 1;
+    text-align: right;
+}
+.pause-mini-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.pause-mini-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s;
+}
+.pause-mini-bar.health  { background: rgba(190,190,190,0.7); }
+.pause-mini-bar.armour  { background: rgba(100,140,190,0.8); }
+
+/* ─── Close button ──────────────────────────────────────────────────────────── */
+#pause-close-btn {
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 4px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.07);
+    color: rgba(140,140,140,0.6);
+    font-size: 0.65em;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+#pause-close-btn:hover {
+    border-color: rgba(255,255,255,0.15);
+    color: rgba(200,200,200,0.85);
+}

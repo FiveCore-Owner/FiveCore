@@ -84,6 +84,31 @@ window.addEventListener('message', e => {
         if (s >= 1 && s <= 3) setStep(s);
     }
 
+    // Branding + tips from server.cfg ConVars
+    if (d.type === 'setBranding') {
+        const nameEl = document.querySelector('.brand-name');
+        const subEl  = document.querySelector('.brand-sub');
+        if (nameEl && d.title) nameEl.textContent = d.title.toUpperCase();
+        if (subEl  && d.bio)   subEl.textContent  = d.bio.toUpperCase();
+
+        // Show/hide tip row
+        const tipRow = document.querySelector('.tip-row');
+        if (tipRow) tipRow.style.display = (d.showTips === false) ? 'none' : '';
+
+        // Override tips with custom list from server.cfg
+        if (Array.isArray(d.customTips) && d.customTips.length > 0) {
+            // Replace TIPS array and reset index
+            TIPS.length = 0;
+            d.customTips.forEach((t, i) => {
+                const key = '__custom_' + i;
+                _loc[key] = t;
+                TIPS.push(key);
+            });
+            tipIdx = 0;
+            showTip();
+        }
+    }
+
     // Language update
     if (d.type === 'setLang' && d.locale) {
         _loc = Object.assign({}, _loc, d.locale);

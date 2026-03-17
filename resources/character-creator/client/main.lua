@@ -119,15 +119,22 @@ end
 local function OpenCreator(charList)
     isOpen = true
 
-    -- Spieler unsichtbar machen
+    -- Spieler unsichtbar machen und einfrieren
     local playerPed = PlayerPedId()
     SetEntityVisible(playerPed, false, false)
     SetEntityInvincible(playerPed, true)
     FreezeEntityPosition(playerPed, true)
+    SetPlayerControl(PlayerId(), false, 0)
 
     -- Zum Creator-Interior teleportieren
     SetEntityCoords(playerPed, CREATOR_INTERIOR.x, CREATOR_INTERIOR.y, CREATOR_INTERIOR.z, false, false, false, true)
     Wait(100)
+
+    -- Loading Screen jetzt schließen — genau wie ESX in SetupCharacters().
+    -- Beide Funktionen aufrufen: ShutdownLoadingScreen (legacy) +
+    -- ShutdownLoadingScreenNui (neu, korrekt für loadscreen_manual_shutdown).
+    ShutdownLoadingScreen()
+    ShutdownLoadingScreenNui()
 
     -- Preview-Ped erstellen
     CreatePreviewPed(GENDER_MALE)
@@ -137,6 +144,9 @@ local function OpenCreator(charList)
     previewCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
     RenderScriptCams(true, true, 500, true, true)
     SetCameraPreset("full")
+
+    -- Einblenden
+    DoScreenFadeIn(400)
 
     -- NUI öffnen (mit Locale-Daten)
     SetNuiFocus(true, true)
@@ -161,6 +171,7 @@ end
 local function CloseCreator()
     isOpen = false
     SetNuiFocus(false, false)
+    SendNUIMessage({ type = "close" })
 
     if previewCam then
         RenderScriptCams(false, true, 500, true, true)
@@ -176,6 +187,7 @@ local function CloseCreator()
     SetEntityVisible(playerPed, true, false)
     SetEntityInvincible(playerPed, false)
     FreezeEntityPosition(playerPed, false)
+    SetPlayerControl(PlayerId(), true, 0)
 end
 
 -- ─── Events vom Server ────────────────────────────────────────────────────────
@@ -267,3 +279,4 @@ AddEventHandler("fivecore:languageChanged", function(lang)
         locale = Locales[lang] or Locales['en'],
     })
 end)
+

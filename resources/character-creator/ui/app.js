@@ -330,7 +330,9 @@ function renderCharList() {
     charList.forEach(char => {
         const card = document.createElement('div');
         card.className = 'char-card';
-        const gIcon = char.gender === 0 ? '♂' : '♀';
+        const gIcon = char.gender === 0
+            ? '<svg style="width:10px;height:10px;fill:currentColor" viewBox="0 0 14 14"><circle cx="7" cy="5.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="9" x2="7" y2="13" stroke="currentColor" stroke-width="1.5"/><line x1="5" y1="11.5" x2="9" y2="11.5" stroke="currentColor" stroke-width="1.5"/></svg>'
+            : '<svg style="width:10px;height:10px;fill:currentColor" viewBox="0 0 14 14"><circle cx="7" cy="7.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="1" x2="7" y2="4" stroke="currentColor" stroke-width="1.5"/><line x1="5" y1="2.5" x2="9" y2="2.5" stroke="currentColor" stroke-width="1.5"/></svg>';
         card.innerHTML = `
             <div>
                 <div class="char-name">${escHtml(char.firstname)} ${escHtml(char.lastname)} <span style="color:#555">${gIcon}</span></div>
@@ -391,6 +393,11 @@ window.addEventListener('message', e => {
             // Charakter-Listen-Buttons neu rendern
             renderCharList();
         }
+        return;
+    }
+
+    if (data.type === 'close') {
+        document.getElementById('app').style.display = 'none';
         return;
     }
 

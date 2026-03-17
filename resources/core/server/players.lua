@@ -88,6 +88,12 @@ function FC_LoadCharacter(source, charId)
     local p = Players[source]
     if not p then return false end
 
+    -- Prevent duplicate loads (e.g. double-click in character creator)
+    if p.state == CHARACTER_STATES.SPAWNING or p.state == CHARACTER_STATES.LOADED then
+        if Config.Debug then print("[CORE] FC_LoadCharacter: already loaded, ignoring for " .. source) end
+        return false
+    end
+
     local row = DB.GetCharacter(charId)
     if not row or row.account_id ~= p.account.id then
         if Config.Debug then print("[CORE] Charakter-Zugriff verweigert: " .. source) end
@@ -103,6 +109,7 @@ function FC_LoadCharacter(source, charId)
         character = char,
         money     = { cash = char.cash, bank = char.bank },
         position  = char.position,
+        fcId      = p.account.id,   -- permanente Server-ID (accounts.id)
     })
 
     DB.Log(source, "character_loaded", { charId = charId, name = char.fullname })
@@ -254,4 +261,43 @@ end)
 
 exports("GetCharacterState", function(source)
     return Players[source] and Players[source].state
+end)
+
+-- ─── Spieler per FC-ID suchen ────────────────────────────────────────────────
+
+local function FindByFCId(fcId)
+    fcId = tonumber(fcId)
+    if not fcId then return nil, nil end
+    for src, p in pairs(Players) do
+        if p.account and p.account.id == fcId then
+            return src, p
+        end
+    end
+    return nil, nil
+end
+
+exports("GetPlayerByFCId", function(fcId)
+    local src, _ = FindByFCId(fcId)
+    return src
+end)
+
+exports("SetJob", function(source, jobName, grade, label)
+    local p = Players[source]
+    if not p or not p.character then return false end
+    local job = {
+        name  = tostring(jobName or "unemployed"),
+        grade = tonumber(grade) or 0,
+        label = tostring(label or jobName or ""),
+    }
+    p.character.job = job
+    DB.SaveJob(p.character.id, job)
+    TriggerClientEvent("fivecore:jobUpdated", source, job)
+    DB.Log(source, "job_set", { job = job.name, grade = job.grade })
+    return true
+end)
+
+exports("GetJob", function(source)
+    local p = Players[source]
+    if not p or not p.character then return nil end
+    return p.character.job
 end)

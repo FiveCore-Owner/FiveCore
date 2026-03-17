@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Banking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" style="display:none">
+
+    <div id="panel">
+
+        <!-- ── Header ── -->
+        <div class="panel-header">
+            <div class="header-icon">
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="14" width="18" height="3" rx="0.5"/>
+                    <rect x="3.5" y="5"  width="3" height="9" rx="0.5"/>
+                    <rect x="8.5" y="5"  width="3" height="9" rx="0.5"/>
+                    <rect x="13.5"y="5"  width="3" height="9" rx="0.5"/>
+                    <polygon points="10,1 1,5 19,5"/>
+                </svg>
+            </div>
+            <div>
+                <div class="panel-title" data-i18n="bank_title">BANKING</div>
+                <div class="panel-sub" data-i18n="bank_subtitle">Maze Bank</div>
+            </div>
+            <button class="btn-close" id="btn-close">
+                <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="2" y1="2" x2="12" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="12" y1="2" x2="2" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- ── Balance ── -->
+        <div class="balance-block">
+            <div class="balance-item">
+                <span class="balance-lbl" data-i18n="bank_cash">Cash</span>
+                <span class="balance-val" id="bal-cash">$0</span>
+            </div>
+            <div class="balance-divider"></div>
+            <div class="balance-item">
+                <span class="balance-lbl" data-i18n="bank_account">Bank Account</span>
+                <span class="balance-val accent" id="bal-bank">$0</span>
+            </div>
+        </div>
+
+        <!-- ── Tabs ── -->
+        <div class="tab-row">
+            <button class="tab active" data-tab="deposit"  data-i18n="bank_deposit">Deposit</button>
+            <button class="tab"        data-tab="withdraw" data-i18n="bank_withdraw">Withdraw</button>
+            <button class="tab"        data-tab="history"  data-i18n="bank_history">History</button>
+        </div>
+
+        <!-- ── Deposit ── -->
+        <div id="tab-deposit" class="tab-content active">
+            <div class="form-group">
+                <label class="form-lbl" data-i18n="bank_amount">Amount</label>
+                <div class="input-row">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="inp-deposit" class="form-input" min="1" placeholder="0" autocomplete="off">
+                </div>
+                <div class="quick-btns">
+                    <button class="quick-btn" data-val="100">100</button>
+                    <button class="quick-btn" data-val="500">500</button>
+                    <button class="quick-btn" data-val="1000">1.000</button>
+                    <button class="quick-btn" data-val="5000">5.000</button>
+                    <button class="quick-btn" data-val="max" id="dep-max" data-i18n="bank_max">MAX</button>
+                </div>
+            </div>
+            <div id="dep-feedback" class="feedback" style="display:none"></div>
+            <button class="btn-confirm" id="btn-deposit" data-i18n="bank_deposit">Deposit</button>
+        </div>
+
+        <!-- ── Withdraw ── -->
+        <div id="tab-withdraw" class="tab-content">
+            <div class="form-group">
+                <label class="form-lbl" data-i18n="bank_amount">Amount</label>
+                <div class="input-row">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="inp-withdraw" class="form-input" min="1" placeholder="0" autocomplete="off">
+                </div>
+                <div class="quick-btns">
+                    <button class="quick-btn" data-val="100">100</button>
+                    <button class="quick-btn" data-val="500">500</button>
+                    <button class="quick-btn" data-val="1000">1.000</button>
+                    <button class="quick-btn" data-val="5000">5.000</button>
+                    <button class="quick-btn" data-val="max" id="wit-max" data-i18n="bank_max">MAX</button>
+                </div>
+            </div>
+            <div id="wit-feedback" class="feedback" style="display:none"></div>
+            <button class="btn-confirm" id="btn-withdraw" data-i18n="bank_withdraw">Withdraw</button>
+        </div>
+
+        <!-- ── History ── -->
+        <div id="tab-history" class="tab-content">
+            <div id="history-list" class="history-list"></div>
+        </div>
+
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
