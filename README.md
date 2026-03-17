@@ -24,13 +24,11 @@
 ```
 server/
 ├── server.cfg                    ← Live server config (credentials)
-├── fivecoretemplate.cfg          ← Template for clean installs
 ├── database/
 │   └── migrations/
 │       ├── 001_init.sql          ← Core tables (accounts, characters, sms, logs)
 │       ├── 002_status.sql        ← Default status values
 │       └── 003_language.sql      ← Language preference column
-├── docs/                         ← You are here
 └── resources/
     ├── [system]/oxmysql/         ← Database connector (download separately)
     ├── core/                     ← FiveCore Framework
