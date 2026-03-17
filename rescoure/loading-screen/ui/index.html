@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FiveCore — Loading</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loading-screen">
+    <div class="bg-overlay"></div>
+    <div class="bg-particles" id="particles"></div>
+    <div class="content">
+        <div class="logo">
+            <div class="logo-icon">FC</div>
+            <div class="logo-text">
+                <span class="logo-main">FIVECORE</span>
+                <span class="logo-sub" data-i18n="loading_subtitle">ROLEPLAY</span>
+            </div>
+        </div>
+        <div class="progress-wrap">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <div id="status-text" class="status-text" data-i18n="loading_step_1">Connecting to server...</div>
+        <div class="steps-row">
+            <div class="step" id="step-1"><div class="step-dot"></div><span data-i18n="loading_server">SERVER</span></div>
+            <div class="step-line"></div>
+            <div class="step" id="step-2"><div class="step-dot"></div><span data-i18n="loading_account">ACCOUNT</span></div>
+            <div class="step-line"></div>
+            <div class="step" id="step-3"><div class="step-dot"></div><span data-i18n="loading_character">CHARACTER</span></div>
+            <div class="step-line"></div>
+            <div class="step" id="step-4"><div class="step-dot"></div><span data-i18n="loading_spawn">SPAWN</span></div>
+            <div class="step-line"></div>
+            <div class="step" id="step-5"><div class="step-dot"></div><span data-i18n="loading_world">WORLD</span></div>
+            <div class="step-line"></div>
+            <div class="step" id="step-6"><div class="step-dot"></div><span data-i18n="loading_ready">READY</span></div>
+        </div>
+        <div class="tip-box">
+            <span class="tip-label" data-i18n="loading_tip_label">TIP</span>
+            <span id="tip-text"></span>
+        </div>
+    </div>
+    <div class="footer">FiveCore Roleplay &bull; Custom Framework</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hud" style="display:none">
+
+    <!-- Rechts oben: Zeit & Zone -->
+    <div id="hud-topright">
+        <span id="hud-time">00:00</span>
+        <span id="hud-zone">Los Santos</span>
+    </div>
+
+    <!-- Rechts unten: Bars -->
+    <div id="hud-bars">
+        <div class="bar-row">
+            <span class="bar-icon">❤</span>
+            <div class="bar-bg"><div class="bar-fill" id="bar-health" style="width:100%;background:#e05050"></div></div>
+            <span class="bar-val" id="val-health">100</span>
+        </div>
+        <div class="bar-row" id="row-armour" style="display:none">
+            <span class="bar-icon">🛡</span>
+            <div class="bar-bg"><div class="bar-fill" id="bar-armour" style="width:0%;background:#6090d0"></div></div>
+            <span class="bar-val" id="val-armour">0</span>
+        </div>
+        <div class="bar-row">
+            <span class="bar-icon">🍖</span>
+            <div class="bar-bg"><div class="bar-fill" id="bar-hunger" style="width:100%;background:#d0902a"></div></div>
+            <span class="bar-val" id="val-hunger">100</span>
+        </div>
+        <div class="bar-row">
+            <span class="bar-icon">💧</span>
+            <div class="bar-bg"><div class="bar-fill" id="bar-thirst" style="width:100%;background:#3aa0d0"></div></div>
+            <span class="bar-val" id="val-thirst">100</span>
+        </div>
+        <div class="bar-row" id="row-stress">
+            <span class="bar-icon">😤</span>
+            <div class="bar-bg"><div class="bar-fill" id="bar-stress" style="width:0%;background:#9040c0"></div></div>
+            <span class="bar-val" id="val-stress">0</span>
+        </div>
+    </div>
+
+    <!-- Links unten: Geld -->
+    <div id="hud-money">
+        <div class="money-row"><span class="money-icon">💵</span><span id="hud-cash">$0</span></div>
+        <div class="money-row sub"><span class="money-icon">🏦</span><span id="hud-bank">$0</span></div>
+    </div>
+
+    <!-- Fahrzeug-Speed (mittig unten, nur wenn im Fz.) -->
+    <div id="hud-speed" style="display:none">
+        <span id="speed-val">0</span>
+        <span class="speed-unit">km/h</span>
+    </div>
+
+</div>
+
+<!-- Notification Container -->
+<div id="notif-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
